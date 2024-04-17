@@ -14,6 +14,7 @@ public class Podcast {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    private String author;
     private String description;
     @Enumerated(EnumType.STRING)
     private Category category;
