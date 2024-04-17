@@ -1,5 +1,7 @@
 package com.example.hiroka.views;
 
+import com.example.hiroka.views.admin.AdminpodcastsView;
+import com.example.hiroka.views.admin.AdminusersView;
 import com.example.hiroka.views.dashboard.DashboardView;
 import com.example.hiroka.views.dashboard.empty.EmptyView;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -51,6 +53,8 @@ public class MainLayout extends AppLayout {
 
         nav.addItem(new SideNavItem("Empty", EmptyView.class, LineAwesomeIcon.FILE.create()));
         nav.addItem(new SideNavItem("Dashboard", DashboardView.class, LineAwesomeIcon.CHART_AREA_SOLID.create()));
+        nav.addItem(new SideNavItem("Admin/podcasts", AdminpodcastsView.class, LineAwesomeIcon.ACCESSIBLE_ICON.create()));
+        nav.addItem(new SideNavItem("Admin/users", AdminusersView.class, LineAwesomeIcon.FILE.create()));
 
         return nav;
     }
