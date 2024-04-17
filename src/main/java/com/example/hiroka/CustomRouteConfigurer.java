@@ -3,7 +3,6 @@ package com.example.hiroka;
 import com.example.hiroka.views.MainLayout;
 import com.example.hiroka.views.admin.AdminpodcastsView;
 import com.example.hiroka.views.admin.AdminusersView;
-import com.example.hiroka.views.dashboard.DashboardView;
 import com.vaadin.flow.router.RouteConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,7 +25,6 @@ public class CustomRouteConfigurer {
         }
 
         // Общедоступные страницы
-        configuration.setRoute("dashboard", DashboardView.class);
 
     }
 }
