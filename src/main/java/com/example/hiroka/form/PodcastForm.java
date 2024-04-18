@@ -123,6 +123,7 @@ public class PodcastForm extends FormLayout {
         openUploadButton.addClickListener(event -> openUploadDialog());
 
 
+
         save.addClickShortcut(Key.ENTER);
         cancel.addClickShortcut(Key.ESCAPE);
         return new HorizontalLayout(save, delete, cancel);
