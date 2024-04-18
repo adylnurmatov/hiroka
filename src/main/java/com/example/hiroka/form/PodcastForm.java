@@ -66,6 +66,7 @@ public class PodcastForm extends FormLayout {
         cancel.addClickListener(click -> fireEvent(new CloseEvent(this)));
 
 
+
         save.addClickShortcut(Key.ENTER);
         cancel.addClickShortcut(Key.ESCAPE);
         return new HorizontalLayout(save, delete, cancel);

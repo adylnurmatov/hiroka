@@ -19,8 +19,8 @@ import jakarta.annotation.security.RolesAllowed;
 import org.springframework.context.annotation.Role;
 
 @PageTitle("Admin/users")
-@Route(value = "users", layout = MainLayout.class)
-@RolesAllowed("ADMIN")
+@Route(value = "/admin/users", layout = MainLayout.class)
+
 public class AdminUsersView extends VerticalLayout {
     private final UserService userService;
     Grid<User> grid = new Grid<>(User.class);
