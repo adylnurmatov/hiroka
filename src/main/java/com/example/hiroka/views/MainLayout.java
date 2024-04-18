@@ -7,6 +7,7 @@ import com.example.hiroka.views.admin.AdminPodcastsView;
 import com.example.hiroka.views.main.MainView;
 import com.example.hiroka.views.profile.ProfileView;
 import com.example.hiroka.views.settings.SettingsView;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -25,6 +26,8 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.theme.lumo.LumoUtility;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.util.Optional;
@@ -66,21 +69,23 @@ public class MainLayout extends AppLayout {
         SideNav nav = new SideNav();
         if (accessChecker.hasAccess(MainView.class)) {
             nav.addItem(new SideNavItem("Main", MainView.class, LineAwesomeIcon.PENCIL_RULER_SOLID.create()));
-
         }
         if (accessChecker.hasAccess(ProfileView.class)) {
             nav.addItem(new SideNavItem("Profile", ProfileView.class, LineAwesomeIcon.USER.create()));
-
         }
+
         if (accessChecker.hasAccess(SettingsView.class)) {
             nav.addItem(new SideNavItem("Settings", SettingsView.class, LineAwesomeIcon.USER.create()));
         }
-        if (accessChecker.hasAccess(AdminPodcastsView.class)) {
+
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
             nav.addItem(new SideNavItem("Admin/podcasts", AdminPodcastsView.class, LineAwesomeIcon.USER.create()));
         }
-        if (accessChecker.hasAccess(AdminUsersView.class)) {
+
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
             nav.addItem(new SideNavItem("Admin/users", AdminUsersView.class, LineAwesomeIcon.TH_SOLID.create()));
         }
+
 //        if(accessChecker.hasAccess(UploadPodcastView.class)){
 //            nav.addItem(new SideNavItem("Upload Podcast", String.valueOf(UploadPodcastView.class), LineAwesomeIcon.USER.create()));
 //        }

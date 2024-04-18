@@ -31,7 +31,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 @PageTitle("Admin/podcasts")
-@Route(value = "podcast", layout = MainLayout.class)
+@Route(value = "/admin/podcast", layout = MainLayout.class)
 @PermitAll
 public class AdminPodcastsView extends VerticalLayout {
     private PodcastServiceImpl podcastServiceImpl;
@@ -39,7 +39,7 @@ public class AdminPodcastsView extends VerticalLayout {
     TextField filterText =new TextField();
 
     PodcastForm podcastForm;
-    private Button saveButton;
+
     private Path tempFile;
 
 
@@ -161,7 +161,6 @@ public class AdminPodcastsView extends VerticalLayout {
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
         Button contactBtn = new Button("Add podcast");
-        Button uploadAudio = new Button("upload audio");
         contactBtn.addClickListener(e -> addPodcast());
         HorizontalLayout toolbar = new HorizontalLayout(filterText, contactBtn);
         toolbar.addClassName("toolbar");
