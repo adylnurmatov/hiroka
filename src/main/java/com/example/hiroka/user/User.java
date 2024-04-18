@@ -32,6 +32,7 @@ public class User implements UserDetails {
             return Collections.singletonList(new SimpleGrantedAuthority("USER"));
 
         return Collections.singletonList(new SimpleGrantedAuthority(role.name()));
+
     }
 
     @Override

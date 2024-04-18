@@ -10,6 +10,12 @@ import com.vaadin.flow.component.button.Button;
 
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
+
+import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.grid.Grid;
+
+
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -30,7 +36,9 @@ import java.nio.file.StandardCopyOption;
 @PageTitle("Admin/podcasts")
 @Route(value = "admin/podcast", layout = MainLayout.class)
 @PermitAll
-public class AdminPodcastsView extends VerticalLayout {
+
+public class AdminpodcastsView extends VerticalLayout {
+
     private final PodcastService podcastService;
     Grid<Podcast> grid = new Grid<>(Podcast.class);
     TextField filterText =new TextField();
@@ -39,8 +47,13 @@ public class AdminPodcastsView extends VerticalLayout {
     private Button saveButton;
     private Path tempFile;
 
-
     public AdminPodcastsView(PodcastService podcastService) {
+
+    public AdminpodcastsView(PodcastService podcastService) {
+        Button openUploadButton = new Button("Add attach mp3");
+        openUploadButton.addClickListener(event -> openUploadDialog());
+
+
         this.podcastService = podcastService;
         addClassName("list-view");
         setSizeFull();
@@ -54,28 +67,26 @@ public class AdminPodcastsView extends VerticalLayout {
         upload.setMaxFileSize(10 * 1024 * 1024);
 
         // Кнопка сохранения, которая изначально не видима
-        saveButton = new Button("Save File", event -> saveFile());
-        saveButton.setVisible(true);
 
         // Добавляем слушатель событий для загрузки файла
         upload.addSucceededListener(event -> {
             InputStream fileContent = buffer.getInputStream();
             // Создаем временный файл
             tempFile = createTempFile(fileContent, event.getFileName());
-            // Показываем кнопку сохранения
-            saveButton.setVisible(true);
+             // Показываем кнопку сохранения
             Notification.show("File uploaded successfully!");
         });
 
         // Добавляем компоненты в FormLayout
-        formLayout.add(upload, saveButton);
+        formLayout.add(upload);
 
         configurePodcastForm();
         configureGrid();
         add(
                 getToolBar(),
                 getContent(),
-                formLayout
+                formLayout,
+                openUploadButton
         );
         updateList();
         closeEditor();
@@ -121,6 +132,35 @@ public class AdminPodcastsView extends VerticalLayout {
         updateList();
         closeEditor();
     }
+    private void openUploadDialog() {
+        Dialog uploadDialog = new Dialog();
+        uploadDialog.setWidth("auto");
+        uploadDialog.setHeight("auto");
+
+        MemoryBuffer buffer = new MemoryBuffer();
+        Upload upload = new Upload(buffer);
+        upload.setAcceptedFileTypes("audio/mpeg", ".mp3");
+
+        // Обработка успешной загрузки файла
+        upload.addSucceededListener(event -> {
+            // Здесь можно добавить логику для обработки файла, например сохранение его на сервере
+            // или в базе данных
+            System.out.println("Upload succeeded");
+        });
+
+        // Обработка ошибки загрузки
+        upload.addFileRejectedListener(event -> {
+            System.out.println("Error uploading: " + event.getErrorMessage());
+        });
+
+        uploadDialog.add(upload);
+
+        // Кнопка для закрытия диалога
+        Button closeButton = new Button("Close", e -> uploadDialog.close());
+        uploadDialog.add(closeButton);
+
+        uploadDialog.open();
+    }
 
     private Component getToolBar() {
         filterText.setPlaceholder("Filter by name");
@@ -147,19 +187,15 @@ public class AdminPodcastsView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassName("contact-grid");
         grid.setSizeFull();
-        grid.setColumns("title", "description", "subtitle");
+        grid.setColumns("title", "description", "subtitle", "author", "fileName");
         grid.getColumns().forEach(contactColumn -> contactColumn.setAutoWidth(true));
         grid.asSingleSelect().addValueChangeListener(e -> editPodcast(e.getValue()));
     }
 
     private void editPodcast(Podcast value) {
-        if(value == null){
-            closeEditor();
-        }else {
             podcastForm.setPodcast(value);
             podcastForm.setVisible(true);
             addClassName("editing");
-        }
     }
     //Marlen's work
     private Path createTempFile(InputStream fileContent, String fileName) {

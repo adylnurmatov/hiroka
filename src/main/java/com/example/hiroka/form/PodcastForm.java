@@ -1,5 +1,6 @@
 package com.example.hiroka.form;
 
+import com.example.hiroka.podcast.Category;
 import com.example.hiroka.podcast.Podcast;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
@@ -22,7 +23,9 @@ import com.vaadin.flow.shared.Registration;
 public class PodcastForm extends FormLayout {
     Binder<Podcast> binder = new BeanValidationBinder<>(Podcast.class);
     TextField title = new TextField("username");
-    TextField description = new TextField("last name");
+    TextField description = new TextField("description");
+    TextField author = new TextField("author");
+    TextField fileName = new TextField("file name");
     TextField text = new TextField("text");
 
 
@@ -40,6 +43,9 @@ public class PodcastForm extends FormLayout {
                 title,
                 description,
                 text,
+                author,
+                fileName,
+
                 createButtonLayout()
         );
     }
