@@ -30,7 +30,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (role == null)
             return Collections.singletonList(new SimpleGrantedAuthority("ROLE_DEFAULT"));
-        return Collections.singletonList(new SimpleGrantedAuthority(role.name()));
+        return Collections.singletonList(new SimpleGrantedAuthority(Role.ADMIN.toString()));
     }
 
     @Override
