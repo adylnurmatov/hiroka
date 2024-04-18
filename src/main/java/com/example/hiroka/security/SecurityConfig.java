@@ -1,6 +1,7 @@
 package com.example.hiroka.security;
 
 import com.example.hiroka.repo.UserRepository;
+import com.example.hiroka.user.Role;
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -40,7 +41,7 @@ public class SecurityConfig  extends VaadinWebSecurity{
         // Icons from the line-awesome addon
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(new AntPathRequestMatcher("/line-awesome/**/*.svg")).permitAll());
-
+        http.authorizeHttpRequests(auth -> auth.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole(String.valueOf(Role.ADMIN)));
         http.formLogin().loginPage("/login").defaultSuccessUrl("/main").permitAll();
         http.logout().logoutUrl("/logout").logoutSuccessUrl("/login").invalidateHttpSession(true).permitAll();
 
