@@ -3,7 +3,7 @@ package com.example.hiroka.views.admin;
 import com.example.hiroka.dto.AudioDto;
 import com.example.hiroka.form.PodcastForm;
 import com.example.hiroka.podcast.Podcast;
-import com.example.hiroka.service.impl.PodcastService;
+import com.example.hiroka.service.impl.PodcastServiceImpl;
 import com.example.hiroka.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -22,10 +22,9 @@ import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.auth.AnonymousAllowed;
 import jakarta.annotation.security.PermitAll;
-import jakarta.annotation.security.RolesAllowed;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,7 +34,7 @@ import java.nio.file.StandardCopyOption;
 @Route(value = "podcast", layout = MainLayout.class)
 @PermitAll
 public class AdminPodcastsView extends VerticalLayout {
-    private PodcastService podcastService;
+    private PodcastServiceImpl podcastServiceImpl;
     Grid<Podcast> grid = new Grid<>(Podcast.class);
     TextField filterText =new TextField();
 
@@ -44,35 +43,35 @@ public class AdminPodcastsView extends VerticalLayout {
     private Path tempFile;
 
 
-    public  AdminPodcastsView(PodcastService podcastService) {
+    public  AdminPodcastsView(PodcastServiceImpl podcastServiceImpl) throws IOException {
         Button openUploadButton = new Button("Add attach mp3");
         openUploadButton.addClickListener(event -> openUploadDialog());
 
-        this.podcastService = podcastService;
+        this.podcastServiceImpl = podcastServiceImpl;
         addClassName("list-view");
         setSizeFull();
 
         FormLayout formLayout = new FormLayout();
 
         // Создаем MemoryBuffer для хранения загруженного файла
-        MemoryBuffer buffer = new MemoryBuffer();
-        Upload upload = new Upload(buffer);
-        upload.setAcceptedFileTypes("audio/mpeg", "audio/mp3");
-        upload.setMaxFileSize(10 * 1024 * 1024);
-
-        // Кнопка сохранения, которая изначально не видима
-
-        // Добавляем слушатель событий для загрузки файла
-        upload.addSucceededListener(event -> {
-            InputStream fileContent = buffer.getInputStream();
-            // Создаем временный файл
-            tempFile = createTempFile(fileContent, event.getFileName());
-            // Показываем кнопку сохранения
-            Notification.show("File uploaded successfully!");
-        });
+//        MemoryBuffer buffer = new MemoryBuffer();
+//        Upload upload = new Upload(buffer);
+//        upload.setAcceptedFileTypes("audio/mpeg", "audio/mp3");
+//        upload.setMaxFileSize(10 * 1024 * 1024);
+//
+//        // Кнопка сохранения, которая изначально не видима
+//
+//        // Добавляем слушатель событий для загрузки файла
+//        upload.addSucceededListener(event -> {
+//            InputStream fileContent = buffer.getInputStream();
+//            // Создаем временный файл
+//            tempFile = createTempFile(fileContent, event.getFileName());
+//            // Показываем кнопку сохранения
+//            Notification.show("File uploaded successfully!");
+//        });
 
         // Добавляем компоненты в FormLayout
-        formLayout.add(upload);
+//        formLayout.add(upload);
 
         configurePodcastForm();
         configureGrid();
@@ -94,7 +93,7 @@ public class AdminPodcastsView extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(podcastService.findAllPodcast(filterText.getValue()));
+        grid.setItems(podcastServiceImpl.findAllPodcast(filterText.getValue()));
     }
 
     private Component getContent() {
@@ -106,7 +105,7 @@ public class AdminPodcastsView extends VerticalLayout {
         return horizontalLayout;
     }
 
-    private void configurePodcastForm() {
+    private void configurePodcastForm() throws IOException {
         podcastForm = new PodcastForm();
         podcastForm.setWidth("25em");
 
@@ -116,13 +115,13 @@ public class AdminPodcastsView extends VerticalLayout {
     }
 
     private void deletePodcast(PodcastForm.DeleteEvent deleteEvent) {
-        podcastService.deletePodcast(deleteEvent.getPodcast());
+        podcastServiceImpl.deletePodcast(deleteEvent.getPodcast());
         updateList();
         closeEditor();
     }
 
     private void savePodcast(PodcastForm.SaveEvent event){
-        podcastService.savePodcast(event.getPodcast());
+        podcastServiceImpl.savePodcast(event.getPodcast());
         updateList();
         closeEditor();
     }
