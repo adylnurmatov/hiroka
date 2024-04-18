@@ -125,6 +125,7 @@ public class PodcastServiceImpl {
     public List<Podcasts.UserPodcast> allNamesAndPaths() {
         List<Podcasts.UserPodcast> podcasts = new ArrayList<>();
         for(Podcast podcast: podcastRepository.findAll()){
+            System.out.println(podcast.getFileName());
             podcasts.add(new Podcasts.UserPodcast(podcast.getTitle(), "audio/" + podcast.getFileName()));
         }
         return podcasts;
