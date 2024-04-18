@@ -33,9 +33,9 @@ import java.nio.file.StandardCopyOption;
 
 @PageTitle("Admin/podcasts")
 @Route(value = "/admin/podcast", layout = MainLayout.class)
-@RolesAllowed("ADMIN")
-public class AdminpodcastsView extends VerticalLayout {
-    private final PodcastService podcastService;
+@PermitAll
+public class AdminPodcastsView extends VerticalLayout {
+    private PodcastService podcastService;
     Grid<Podcast> grid = new Grid<>(Podcast.class);
     TextField filterText =new TextField();
 
@@ -44,7 +44,7 @@ public class AdminpodcastsView extends VerticalLayout {
     private Path tempFile;
 
 
-    public AdminpodcastsView(PodcastService podcastService) {
+    public  AdminPodcastsView(PodcastService podcastService) {
         Button openUploadButton = new Button("Add attach mp3");
         openUploadButton.addClickListener(event -> openUploadDialog());
 
@@ -67,7 +67,7 @@ public class AdminpodcastsView extends VerticalLayout {
             InputStream fileContent = buffer.getInputStream();
             // Создаем временный файл
             tempFile = createTempFile(fileContent, event.getFileName());
-             // Показываем кнопку сохранения
+            // Показываем кнопку сохранения
             Notification.show("File uploaded successfully!");
         });
 
@@ -186,9 +186,9 @@ public class AdminpodcastsView extends VerticalLayout {
     }
 
     private void editPodcast(Podcast value) {
-            podcastForm.setPodcast(value);
-            podcastForm.setVisible(true);
-            addClassName("editing");
+        podcastForm.setPodcast(value);
+        podcastForm.setVisible(true);
+        addClassName("editing");
     }
     //Marlen's work
     private Path createTempFile(InputStream fileContent, String fileName) {

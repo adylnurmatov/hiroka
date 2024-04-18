@@ -16,11 +16,11 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
-import org.springframework.context.annotation.Role;
+
 
 @PageTitle("Admin/users")
 @Route(value = "/admin/users", layout = MainLayout.class)
-
+@PermitAll
 public class AdminUsersView extends VerticalLayout {
     private final UserService userService;
     Grid<User> grid = new Grid<>(User.class);

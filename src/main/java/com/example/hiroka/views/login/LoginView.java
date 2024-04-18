@@ -31,7 +31,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
     public LoginView(AuthService authService, UserRepository repository){
 
-        System.out.println("\n\n\n\n\n\nkhugj"+ VaadinSession.getCurrent().getSession().getAttribute("email"));
+        System.out.println("\n\n\n\n\n\n"+ VaadinSession.getCurrent().getSession().getAttribute("email"));
         this.authService = authService;
         this.userRepository = repository;
 
@@ -47,12 +47,11 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
             try {
                 authService.login(e.getUsername(), e.getPassword());
                 Notification.show("successfully login");
-                System.out.println("login suc1");
                 if(repository.findByEmail(e.getUsername()).get().getRole().equals(Role.ADMIN)){
-                    UI.getCurrent().navigate("list");
+                    UI.getCurrent().navigate("admin/users");
                 }
                 else {
-                    UI.getCurrent().navigate("dashboard");
+                    UI.getCurrent().navigate("main");
                 }
             }catch (Exception exception){
                 Notification.show("incorrect p/login");

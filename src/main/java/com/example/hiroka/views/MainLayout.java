@@ -3,28 +3,33 @@ package com.example.hiroka.views;
 import com.example.hiroka.security.AuthenticatedUser;
 import com.example.hiroka.user.User;
 import com.example.hiroka.views.admin.AdminUsersView;
-import com.example.hiroka.views.admin.AdminpodcastsView;
+import com.example.hiroka.views.admin.AdminPodcastsView;
 import com.example.hiroka.views.main.MainView;
 import com.example.hiroka.views.profile.ProfileView;
 import com.example.hiroka.views.settings.SettingsView;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
-import com.vaadin.flow.component.avatar.Avatar;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.menubar.MenuBar;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.theme.lumo.LumoUtility;
-import jakarta.annotation.security.PermitAll;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
-import java.io.ByteArrayInputStream;
 import java.util.Optional;
 
 public class MainLayout extends AppLayout {
@@ -47,12 +52,11 @@ public class MainLayout extends AppLayout {
 
         viewTitle = new H2();
         viewTitle.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
-
-        addToNavbar(true, toggle, viewTitle);
+        addToNavbar(true, toggle, viewTitle  );
     }
 
     private void addDrawerContent() {
-        H1 appName = new H1("My App");
+        H1 appName = new H1("Mega Podcast");
         appName.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
         Header header = new Header(appName);
 
@@ -65,21 +69,23 @@ public class MainLayout extends AppLayout {
         SideNav nav = new SideNav();
         if (accessChecker.hasAccess(MainView.class)) {
             nav.addItem(new SideNavItem("Main", MainView.class, LineAwesomeIcon.PENCIL_RULER_SOLID.create()));
-
         }
         if (accessChecker.hasAccess(ProfileView.class)) {
             nav.addItem(new SideNavItem("Profile", ProfileView.class, LineAwesomeIcon.USER.create()));
-
         }
+
         if (accessChecker.hasAccess(SettingsView.class)) {
             nav.addItem(new SideNavItem("Settings", SettingsView.class, LineAwesomeIcon.USER.create()));
         }
-        if (accessChecker.hasAccess(AdminpodcastsView.class)) {
-            nav.addItem(new SideNavItem("Admin/podcasts", AdminpodcastsView.class, LineAwesomeIcon.USER.create()));
+
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
+            nav.addItem(new SideNavItem("Admin/podcasts", AdminPodcastsView.class, LineAwesomeIcon.USER.create()));
         }
-        if (accessChecker.hasAccess(AdminUsersView.class)) {
-            nav.addItem(new SideNavItem("Admin/users", AdminUsersView.class, LineAwesomeIcon.USER.create()));
+
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
+            nav.addItem(new SideNavItem("Admin/users", AdminUsersView.class, LineAwesomeIcon.TH_SOLID.create()));
         }
+
 //        if(accessChecker.hasAccess(UploadPodcastView.class)){
 //            nav.addItem(new SideNavItem("Upload Podcast", String.valueOf(UploadPodcastView.class), LineAwesomeIcon.USER.create()));
 //        }
