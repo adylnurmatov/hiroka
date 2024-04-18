@@ -16,6 +16,6 @@ public class Podcast {
     private String description;
     @Enumerated(EnumType.STRING)
     private Category category;
-    private String subtitle;
+    private String subtitle;//текст
     private String fileName;
 }

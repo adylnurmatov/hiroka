@@ -8,10 +8,13 @@ import com.example.hiroka.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 
+import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.grid.Grid;
 
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
+
 
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -22,7 +25,6 @@ import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.auth.AnonymousAllowed;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 
@@ -32,9 +34,11 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 @PageTitle("Admin/podcasts")
-@Route(value = "podcast", layout = MainLayout.class)
+@Route(value = "admin/podcast", layout = MainLayout.class)
 @PermitAll
+
 public class AdminpodcastsView extends VerticalLayout {
+
     private final PodcastService podcastService;
     Grid<Podcast> grid = new Grid<>(Podcast.class);
     TextField filterText =new TextField();
@@ -43,10 +47,12 @@ public class AdminpodcastsView extends VerticalLayout {
     private Button saveButton;
     private Path tempFile;
 
+    public AdminPodcastsView(PodcastService podcastService) {
 
     public AdminpodcastsView(PodcastService podcastService) {
         Button openUploadButton = new Button("Add attach mp3");
         openUploadButton.addClickListener(event -> openUploadDialog());
+
 
         this.podcastService = podcastService;
         addClassName("list-view");

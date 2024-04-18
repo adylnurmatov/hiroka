@@ -1,7 +1,7 @@
 package com.example.hiroka;
 
 import com.example.hiroka.views.MainLayout;
-import com.example.hiroka.views.admin.AdminpodcastsView;
+import com.example.hiroka.views.admin.AdminPodcastsView;
 import com.example.hiroka.views.admin.AdminUsersView;
 import com.vaadin.flow.router.RouteConfiguration;
 import org.springframework.security.core.Authentication;
@@ -20,7 +20,7 @@ public class CustomRouteConfigurer {
         // Регистрация маршрутов в зависимости от ролей
         if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
             // Только для администраторов
-            configuration.setRoute("podcasts", AdminpodcastsView.class, MainLayout.class);
+            configuration.setRoute("podcasts", AdminPodcastsView.class, MainLayout.class);
             configuration.setRoute("users", AdminUsersView.class, MainLayout.class);
         }
 

@@ -25,23 +25,32 @@ public class RegisterView extends VerticalLayout {
 
         this.authService = authService;
         this.emailField = new EmailField("email");
+        emailField.setWidth("24%");
         emailField.setPlaceholder("Email");
         passwordField = new PasswordField("password");
+        passwordField.setWidth("24%");
         passwordField.setPlaceholder("Password");
-
-        login = new Button("Login");
-
-        login.addClickListener( e -> {
-            UI.getCurrent().navigate("login");
-        });
+        setSizeFull();
+        setAlignItems(Alignment.CENTER);
+        setJustifyContentMode(JustifyContentMode.CENTER);
         register = new Button("register");
         register.addClickListener( e -> {
             try {
                 authService.register(emailField.getValue(), passwordField.getValue());
             }catch (Exception exception){
-                throw new NotFoundException("sfaafiysjk");
+                throw new NotFoundException("Not found");
             }
         });
+
+
+        login = new Button("Login");
+        login.setWidth("30px");
+
+
+        login.addClickListener( e -> {
+            UI.getCurrent().navigate("login");
+        });
+
 
         add(emailField, passwordField, login, register);
 
