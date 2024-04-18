@@ -2,11 +2,14 @@ package com.example.hiroka.views.podcast;
 import com.example.hiroka.podcast.Podcast;
 import com.example.hiroka.repo.PodcastRepository;
 import com.example.hiroka.service.impl.PodcastServiceImpl;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -21,6 +24,9 @@ import java.util.List;
 @Route(value = "podcasts")
 @AnonymousAllowed
 public class Podcasts extends VerticalLayout {
+    ComboBox<String> lan = new ComboBox<>();
+
+    List<UserPodcast> podcasts;
 
     private final PodcastServiceImpl podcastService;
     
@@ -28,6 +34,42 @@ public class Podcasts extends VerticalLayout {
         this.podcastService = podcastService;
         setAlignItems(Alignment.CENTER);
         setSizeFull();
+        Button enBu = new Button("en");
+        Button frBu = new Button("fr");
+
+        podcasts = podcastService.allNamesAndPaths();
+
+        for (UserPodcast podcast : podcasts) {
+            HorizontalLayout podcastLayout = createPodcastLayout(podcast);
+            add(podcastLayout);
+        }
+
+
+        enBu.addClickListener(e -> {
+            text2Speech("en");
+            podcasts = podcastService.allNamesAndPaths();
+            System.out.println("en");
+
+            for (UserPodcast podcast : podcasts) {
+                HorizontalLayout podcastLayout = createPodcastLayout(podcast);
+                add(podcastLayout);
+            }
+        });
+        frBu.addClickListener(e -> {
+            text2Speech("fr");
+
+            podcasts = podcastService.allNamesAndPaths();
+            System.out.println("fr");
+
+            for (UserPodcast podcast : podcasts) {
+                HorizontalLayout podcastLayout = createPodcastLayout(podcast);
+                add(podcastLayout);
+            }
+        });
+
+
+
+
 
         // Your other UI initialization...
 
@@ -35,12 +77,8 @@ public class Podcasts extends VerticalLayout {
 //                new UserPodcast("Подкаст о технологиях", "/home/marlen/Desktop/hiroka/src/main/resources/audio/telegram_audio.mp3"),
 //                new UserPodcast("BROOOO" , "audio/uuu.mp3")
 //        };
-        List<UserPodcast> podcasts;
-        podcasts = podcastService.allNamesAndPaths();
-        for (UserPodcast podcast : podcasts) {
-            HorizontalLayout podcastLayout = createPodcastLayout(podcast);
-            add(podcastLayout);
-        }
+
+        add(enBu, frBu);
     }
 
     private HorizontalLayout createPodcastLayout(UserPodcast podcast) {
@@ -112,7 +150,7 @@ public class Podcasts extends VerticalLayout {
             this.audioSource = audioSource; // Relative path within the 'src/main/resources/META-INF/resources/' directory
         }
     }
-
+//  us En
     private void text2Speech(String language){
         podcastService.text2Speech(language);
     }
