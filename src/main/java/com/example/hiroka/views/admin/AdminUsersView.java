@@ -16,11 +16,12 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
+import org.springframework.context.annotation.Role;
 
 @PageTitle("Admin/users")
 @Route(value = "users", layout = MainLayout.class)
-@PermitAll
-public class AdminusersView extends VerticalLayout {
+@RolesAllowed("ADMIN")
+public class AdminUsersView extends VerticalLayout {
     private final UserService userService;
     Grid<User> grid = new Grid<>(User.class);
     TextField filterText =new TextField();
@@ -28,7 +29,7 @@ public class AdminusersView extends VerticalLayout {
     UserForm userForm;
 
 
-    public AdminusersView(UserService userService) {
+    public AdminUsersView(UserService userService) {
         this.userService = userService;
         addClassName("list-view");
         setSizeFull();

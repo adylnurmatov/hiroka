@@ -12,6 +12,7 @@ import java.util.List;
 public class PodcastService {
     private final PodcastRepository podcastRepository;
 
+
     public List<Podcast> findAllPodcast(String filterText){
         if(filterText == null || filterText.isEmpty()){
             return podcastRepository.findAll();
@@ -24,8 +25,9 @@ public class PodcastService {
     public void deletePodcast(Podcast contact){
         podcastRepository.delete(contact);
     }
-
     public void savePodcast(Podcast podcast){
+
     }
+
 
 }

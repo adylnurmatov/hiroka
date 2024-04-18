@@ -2,7 +2,7 @@ package com.example.hiroka;
 
 import com.example.hiroka.views.MainLayout;
 import com.example.hiroka.views.admin.AdminpodcastsView;
-import com.example.hiroka.views.admin.AdminusersView;
+import com.example.hiroka.views.admin.AdminUsersView;
 import com.vaadin.flow.router.RouteConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,7 +21,7 @@ public class CustomRouteConfigurer {
         if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
             // Только для администраторов
             configuration.setRoute("podcasts", AdminpodcastsView.class, MainLayout.class);
-            configuration.setRoute("users", AdminusersView.class, MainLayout.class);
+            configuration.setRoute("users", AdminUsersView.class, MainLayout.class);
         }
 
         // Общедоступные страницы
