@@ -32,7 +32,7 @@ import java.nio.file.StandardCopyOption;
 
 @PageTitle("Admin/podcasts")
 @Route(value = "podcast", layout = MainLayout.class)
-@PermitAll
+@RolesAllowed("ADMIN")
 public class AdminpodcastsView extends VerticalLayout {
     private final PodcastService podcastService;
     Grid<Podcast> grid = new Grid<>(Podcast.class);

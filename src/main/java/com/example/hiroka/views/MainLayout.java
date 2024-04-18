@@ -2,6 +2,8 @@ package com.example.hiroka.views;
 
 import com.example.hiroka.security.AuthenticatedUser;
 import com.example.hiroka.user.User;
+import com.example.hiroka.views.admin.AdminUsersView;
+import com.example.hiroka.views.admin.AdminpodcastsView;
 import com.example.hiroka.views.main.MainView;
 import com.example.hiroka.views.profile.ProfileView;
 import com.example.hiroka.views.settings.SettingsView;
@@ -70,9 +72,17 @@ public class MainLayout extends AppLayout {
 
         }
         if (accessChecker.hasAccess(SettingsView.class)) {
-            nav.addItem(new SideNavItem("Settings", SettingsView.class, LineAwesomeIcon.PENCIL_RULER_SOLID.create()));
+            nav.addItem(new SideNavItem("Settings", SettingsView.class, LineAwesomeIcon.USER.create()));
         }
-
+        if (accessChecker.hasAccess(AdminpodcastsView.class)) {
+            nav.addItem(new SideNavItem("Admin/podcasts", AdminpodcastsView.class, LineAwesomeIcon.USER.create()));
+        }
+        if (accessChecker.hasAccess(AdminUsersView.class)) {
+            nav.addItem(new SideNavItem("Admin/users", AdminUsersView.class, LineAwesomeIcon.USER.create()));
+        }
+//        if(accessChecker.hasAccess(UploadPodcastView.class)){
+//            nav.addItem(new SideNavItem("Upload Podcast", String.valueOf(UploadPodcastView.class), LineAwesomeIcon.USER.create()));
+//        }
         return nav;
     }
 
