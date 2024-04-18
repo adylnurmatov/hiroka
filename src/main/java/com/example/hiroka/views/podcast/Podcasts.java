@@ -19,13 +19,13 @@ public class Podcasts extends VerticalLayout {
 
     public Podcasts() {
         setAlignItems(Alignment.CENTER);
-        setJustifyContentMode(JustifyContentMode.CENTER);
         setSizeFull();
 
         // Your other UI initialization...
 
         Podcast[] podcasts = {
-                new Podcast("Подкаст о технологиях", "audio/marlen.mp3")
+                new Podcast("Подкаст о технологиях", "audio/marlen.mp3"),
+                new Podcast("BROOOO" , "audio/uuu.mp3")
         };
         for (Podcast podcast : podcasts) {
             HorizontalLayout podcastLayout = createPodcastLayout(podcast);
@@ -44,6 +44,7 @@ public class Podcasts extends VerticalLayout {
 
         // Button to play the podcast
         Button playButton = new Button("Play");
+
 
 
 
@@ -86,7 +87,6 @@ public class Podcasts extends VerticalLayout {
                 .appendChild(new Element("source")
                         .setAttribute("type", "audio/mp3")
                         .setAttribute("src", streamResource)));
-
 
         podcastLayout.add(podcastName, playButton, audioDiv);
 

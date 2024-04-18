@@ -22,7 +22,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Width;
 
 public class ImageGalleryViewCard extends ListItem {
 
-        public ImageGalleryViewCard(String text, String url  ) {
+        public ImageGalleryViewCard(String text, String url , String t ) {
             addClassNames(Background.CONTRAST_5, Display.FLEX, FlexDirection.COLUMN, AlignItems.START, Padding.MEDIUM,
                     BorderRadius.LARGE);
             setWidth("20%");
@@ -30,7 +30,7 @@ public class ImageGalleryViewCard extends ListItem {
             Div div = new Div();
             div.addClassNames(Background.CONTRAST, Display.FLEX, AlignItems.CENTER, JustifyContent.CENTER,
                     Margin.Bottom.MEDIUM, Overflow.HIDDEN, BorderRadius.MEDIUM, Width.FULL);
-            div.setHeight("16%");
+            div.setHeight("26%");
             div.addClickListener(e -> UI.getCurrent().navigate("podcasts"));
 
             Image image = new Image();
@@ -43,20 +43,17 @@ public class ImageGalleryViewCard extends ListItem {
 
             Span header = new Span();
             header.addClassNames(FontSize.XLARGE, FontWeight.SEMIBOLD);
-            header.setText("Podcast title");
+            header.setText(text);
 
-            Span subtitle = new Span();
-            subtitle.addClassNames(FontSize.SMALL, TextColor.SECONDARY);
-            subtitle.setText("Popular podcasts");
 
-            Paragraph description = new Paragraph(
-                    "Kyrgyz popular podcast. Listen to the best podcasts on relationships, love, and life.");
+
+            Paragraph description = new Paragraph(t);
             description.addClassName(Margin.Vertical.MEDIUM);
 
             Span badge = new Span();
             badge.getElement().setAttribute("theme", "badge");
             badge.setText("Podcast");
 
-            add(div, header, subtitle, description, badge);
+            add(div, header, description, badge);
         }
 }

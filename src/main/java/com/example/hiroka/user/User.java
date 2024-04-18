@@ -29,7 +29,8 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (role == null)
-            return Collections.singletonList(new SimpleGrantedAuthority("ROLE_DEFAULT"));
+            return Collections.singletonList(new SimpleGrantedAuthority("USER"));
+
         return Collections.singletonList(new SimpleGrantedAuthority(role.name()));
     }
 

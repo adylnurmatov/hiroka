@@ -18,9 +18,11 @@ import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.context.annotation.Role;
 
+import static com.example.hiroka.user.Role.ADMIN;
+
 @PageTitle("Admin/users")
-@Route(value = "users", layout = MainLayout.class)
-@RolesAllowed("ADMIN")
+@Route(value = "admin/users", layout = MainLayout.class)
+@PermitAll
 public class AdminUsersView extends VerticalLayout {
     private final UserService userService;
     Grid<User> grid = new Grid<>(User.class);

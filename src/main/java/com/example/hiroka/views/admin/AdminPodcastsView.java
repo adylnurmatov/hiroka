@@ -8,10 +8,8 @@ import com.example.hiroka.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 
-import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -21,7 +19,6 @@ import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.auth.AnonymousAllowed;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 
@@ -31,9 +28,9 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 @PageTitle("Admin/podcasts")
-@Route(value = "podcast", layout = MainLayout.class)
-@RolesAllowed("ADMIN")
-public class AdminpodcastsView extends VerticalLayout {
+@Route(value = "admin/podcast", layout = MainLayout.class)
+@PermitAll
+public class AdminPodcastsView extends VerticalLayout {
     private final PodcastService podcastService;
     Grid<Podcast> grid = new Grid<>(Podcast.class);
     TextField filterText =new TextField();
@@ -43,7 +40,7 @@ public class AdminpodcastsView extends VerticalLayout {
     private Path tempFile;
 
 
-    public AdminpodcastsView(PodcastService podcastService) {
+    public AdminPodcastsView(PodcastService podcastService) {
         this.podcastService = podcastService;
         addClassName("list-view");
         setSizeFull();
