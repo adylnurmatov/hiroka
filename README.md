@@ -16,10 +16,12 @@ This project is a web-based podcast listening platform developed using Vaadin an
 <h2>Getting Started</h2>
 To get a local copy up and running, follow these simple steps:  
 <br>
-<ol>Clone the repository.</ol>
-<ol>Install the required dependencies.</ol>
-<ol>Set up your PostgreSQL database</ol>
-<ol>Run the application.</ol>
+<ol type="1">
+<li>Clone the repository.</li>
+<li>Install the required dependencies.</li>
+<li>Set up your PostgreSQL database</li>
+<li>Run the application.</li>
+  </ol>
 <h2>Contributing</h2>
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.  
 <h2>License</h2>
