@@ -36,6 +36,9 @@ public class Podcasts extends VerticalLayout {
         setSizeFull();
         Button enBu = new Button("en");
         Button frBu = new Button("fr");
+        Button koBu = new Button("ko");
+        Button deBu = new Button("ge");
+        Button ruBu = new Button("ru");
 
         podcasts = podcastService.allNamesAndPaths();
 
@@ -49,6 +52,36 @@ public class Podcasts extends VerticalLayout {
             text2Speech("en");
             podcasts = podcastService.allNamesAndPaths();
             System.out.println("en");
+
+            for (UserPodcast podcast : podcasts) {
+                HorizontalLayout podcastLayout = createPodcastLayout(podcast);
+                add(podcastLayout);
+            }
+        });
+        koBu.addClickListener(e -> {
+            text2Speech("ko");
+            podcasts = podcastService.allNamesAndPaths();
+            System.out.println("ko");
+
+            for (UserPodcast podcast : podcasts) {
+                HorizontalLayout podcastLayout = createPodcastLayout(podcast);
+                add(podcastLayout);
+            }
+        });
+        deBu.addClickListener(e -> {
+            text2Speech("ge");
+            podcasts = podcastService.allNamesAndPaths();
+            System.out.println("ko");
+
+            for (UserPodcast podcast : podcasts) {
+                HorizontalLayout podcastLayout = createPodcastLayout(podcast);
+                add(podcastLayout);
+            }
+        });
+        ruBu.addClickListener(e -> {
+            text2Speech("ru");
+            podcasts = podcastService.allNamesAndPaths();
+            System.out.println("ko");
 
             for (UserPodcast podcast : podcasts) {
                 HorizontalLayout podcastLayout = createPodcastLayout(podcast);
@@ -78,7 +111,7 @@ public class Podcasts extends VerticalLayout {
 //                new UserPodcast("BROOOO" , "audio/uuu.mp3")
 //        };
 
-        add(enBu, frBu);
+        add(enBu, frBu, ruBu, koBu, deBu);
     }
 
     private HorizontalLayout createPodcastLayout(UserPodcast podcast) {
